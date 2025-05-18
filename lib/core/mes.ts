@@ -11,11 +11,26 @@ interface IMesHeader {
 interface IMesBody {
     sections: IMesSection[]
 }
+
+/// Sectionの実装部
 interface IMesSection {
     name: string;
     pieces: IMesPiece[]
 }
 
+export class MesSection implements IMesSection {
+    name: string = "";
+    pieces: IMesPiece[] = [];
+    constructor(args = {name: ""}) {
+        this.name = args.name;
+    }
+    addPiece(piece: IMesPiece) {
+        this.pieces.push(piece);
+    }
+} 
+
+
+///　Pieceの実装部
 interface IMesPiece {
     dialogue: string;
     character: string;
@@ -33,10 +48,6 @@ interface IMesDecoratorConfig {
     matchSoundPosition(line: string): boolean;
     matchTiming(line: string): boolean;
     matchExtField(line: string): boolean;
-}
-interface IMesPieceConfig {
-    LineDelimiter: string;
-    Decorator: IMesDecoratorConfig;
 }
 
 class MesDecoratorConfig implements IMesDecoratorConfig {
@@ -57,7 +68,11 @@ class MesDecoratorConfig implements IMesDecoratorConfig {
     matchExtField(line: string) { return this.Decorator.ExtField.includes(line) }
 }
 
-/// 実装部
+interface IMesPieceConfig {
+    LineDelimiter: string;
+    Decorator: IMesDecoratorConfig;
+}
+
 export class MesConfig implements IMesPieceConfig {
     //Set.has()をつかってみたいけど、たぶん文字列長的に短いからString.includes()でいいと思う
     public Decorator = new MesDecoratorConfig();
@@ -66,7 +81,6 @@ export class MesConfig implements IMesPieceConfig {
 
     }
 }
-
 
 
 // TODO: MesPieceの実装を行う
