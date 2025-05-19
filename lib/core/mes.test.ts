@@ -1,4 +1,4 @@
-import { MesPiece, MesConfig } from "./mes"
+import { MesPiece, MesConfig, MesSection } from "./mes"
 
 
 test("MesPieceTest", () => {
@@ -17,3 +17,24 @@ test("MesPieceTest", () => {
     expect(mesPiece.dialogue).toBe("あ、キタキタ。女の子二人を待たせるなんて、失礼だぞ。\n");
 
 });
+
+//TODO: MesSectionの実装を行う
+test("MesSection", () => {
+    const config = new MesConfig();
+    const sectionText = `＠ニカ（＠はキャラ名のデコレーター）
+＃場所は駅前（＃はコメント全般のデコレーター）
+＄駅前の音（＄は音響指示のデコレーター）
+！正面（！はサウンドポジション）
+あ、キタキタ。女の子二人を待たせるなんて、失礼だぞ。
+
+＠ニカ（＠はキャラ名のデコレーター）
+＃場所は駅前（＃はコメント全般のデコレーター）
+＄駅前の音（＄は音響指示のデコレーター）
+！正面（！はサウンドポジション）
+あ、キタキタ。女の子二人を待たせるなんて、失礼だぞ。
+`
+
+    const mesPiece = new MesSection({name: "sample", text: sectionText, config: config});
+
+});
+

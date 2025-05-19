@@ -17,12 +17,13 @@ interface IMesSection {
     name: string;
     pieces: IMesPiece[]
 }
-
+//TODO: MesSectionの実装を行う
 export class MesSection implements IMesSection {
     name: string = "";
     pieces: IMesPiece[] = [];
-    constructor(args = {name: ""}) {
-        this.name = args.name;
+    constructor(args = { name: "", text: "", config: new MesConfig() }) {
+        this.name = args.name ?? "";
+        this.pieces = args.config.splitPieceText(args.text);
     }
     addPiece(piece: IMesPiece) {
         this.pieces.push(piece);
@@ -80,6 +81,7 @@ export class MesConfig implements IMesPieceConfig {
     constructor() {
 
     }
+    public splitPieceText(text: string): MesPiece[] { return new Array<MesPiece>() }
 }
 
 
